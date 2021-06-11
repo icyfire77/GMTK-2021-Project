@@ -11,19 +11,32 @@ function Magnet:new(dir, x, y, width, height)
 end
 
 function Magnet:update(dt)
-  if self.dir == "left" then
-    self.x = self.x - self.vel*dt
-  else
-    self.x = self.x + self.vel*dt
-end
 
-function Magnet:accelerate(speed)
   if self.dir == "left" then
-    self.vel = self.vel - speed
+    self.x = self.x + self.vel*dt
   else
-    self.vel = self.vel + speed
+    self.x = self.x - self.vel*dt
   end
 end
 
+function Magnet:centreCollision()
+  if self.dir == "left" then
+    if self.x > love.graphics.getWidth()/2 - self.width then
+      self.vel = 0
+      self.x = love.graphics.getWidth()/2 - self.width
+    end
+  else
+    if self.x < love.graphics.getWidth()/2 then
+      self.vel = 0
+      self.x = love.graphics.getWidth()/2
+    end
+  end
+end
+
+function Magnet:accelerate(speed)
+    self.vel = self.vel + speed
+end
+
 function Magnet:draw()
+  love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
 end
