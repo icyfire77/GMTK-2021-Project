@@ -15,7 +15,6 @@ function love.load()
 
 -- menu logic (WIP)
   currentScreen = "menu"
-<<<<<<< HEAD
   table.insert(buttons, newButton("Start",
     function()
       print("Starting Game")
