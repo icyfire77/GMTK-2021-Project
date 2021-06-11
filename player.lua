@@ -11,12 +11,21 @@ function Magnet:new(dir, x, y, width, height)
 end
 
 function Magnet:update(dt)
-
   if self.dir == "left" then
     self.x = self.x + self.vel*dt
   else
     self.x = self.x - self.vel*dt
   end
+end
+
+function Magnet:bounce(strength)
+  if self.dir == "left" then
+    self.x = self.x - strength
+  else
+    self.x = self.x + strength
+  end
+
+
 end
 
 function Magnet:centreCollision()
