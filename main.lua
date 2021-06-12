@@ -47,7 +47,7 @@ function love.load()
   table.insert(menuButtons, newButton("Start",
     function()
       -- Likely first change this to some tutorial page later
-      
+
       -- currentScreen = "levelOne"
       -- print(currentScreen)
       -- sound = love.audio.newSource(
@@ -63,6 +63,7 @@ function love.load()
   table.insert(menuButtons, newButton("Credits",
     function()
       currentScreen = "credits"
+      creditsY = windowHeight
       print("none for now, WIP")
     end
   ))
@@ -205,7 +206,7 @@ function love.draw()
       for i, button in ipairs(levelButtons) do
         button.now = true
         button.x = windowWidth/2 + gap * (i-1)
-        button.y = windowHeight/2 
+        button.y = windowHeight/2
       end
     end
 
@@ -241,7 +242,7 @@ function love.draw()
             end
           end
           button.x = button.x + diffx
-        end  
+        end
         actualdiffx = 0
         if i == #levelButtons then
           diffx = 0
