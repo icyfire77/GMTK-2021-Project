@@ -1,6 +1,8 @@
 -- based
 Magnet = Object:extend()
 
+-- input: direction of magnet, x/y, and width/height
+-- function: constructor for a magnet object
 function Magnet:new(dir, x, y, width, height)
   self.x = x
   self.y = y
@@ -11,6 +13,7 @@ function Magnet:new(dir, x, y, width, height)
   self.previous = false
 end
 
+-- updates position of magnet
 function Magnet:update(dt)
   if self.dir == "left" then
     self.x = self.x + self.vel*dt
@@ -19,6 +22,7 @@ function Magnet:update(dt)
   end
 end
 
+-- reverses polarity of magnet
 function Magnet:bounce(strength)
   self.vel = 0
   if self.dir == "left" then
@@ -29,6 +33,7 @@ function Magnet:bounce(strength)
   self.previous = true
 end
 
+-- makes sure magnet does not cross centre of screen
 function Magnet:centreCollision()
   if self.dir == "left" then
     if self.x > windowWidth/2 - self.width then
@@ -43,6 +48,7 @@ function Magnet:centreCollision()
   end
 end
 
+-- makes sure magnet does not go out of bounds
 function Magnet:wallCollision()
   if self.dir == "left" then
     if self.x < 0 then
@@ -57,6 +63,8 @@ function Magnet:wallCollision()
   end
 end
 
+-- input: acceleration
+-- updates acceleration of magnet
 function Magnet:accelerate(speed)
     self.vel = self.vel + speed
 end
@@ -73,6 +81,7 @@ function Magnet:getXLocation()
   return self.x
 end
 
+-- draws magnet to the screen
 function Magnet:draw()
   love.graphics.setColor(1, 1, 1, 1)
   love.graphics.rectangle("line", self.x, self.y, self.width, self.height)

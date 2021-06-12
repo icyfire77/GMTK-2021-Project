@@ -9,8 +9,10 @@ function newButton(text, fn)
 end
 
 local buttons = {}
+local creditsVel = 100
 
 function love.load()
+  -- love.graphics.setBackgroundColor(0.5, 0.5, 0.5, 1) -- for debugging
   Object = require "classic"
   require "player"
   require "endless"
@@ -20,13 +22,14 @@ function love.load()
   -- useful global/local variables?
   windowWidth = love.graphics.getWidth()
   windowHeight = love.graphics.getHeight()
+  creditsY = windowHeight
   magnetAccel = 10
-  releaseFrames = 60
+  releaseFrames = 15
   releaseCounter = 0
-  strength = 15
+  strength = 5
 
   playerL = Magnet("left", 0, 650, 50, 20)
-  playerR = Magnet("right", love.graphics.getWidth()-50, 650, 50, 20)
+  playerR = Magnet("right", love.graphics.getWidth() -50, 650, 50, 20)
 
 
   num_enemies = 100      -- number of enemies to generate
@@ -83,7 +86,9 @@ function love.update(dt)
       playerR:centreCollision()
       playerL:wallCollision()
       playerR:wallCollision()
-    end
+  elseif currentScreen == "credits" then
+    creditsY = creditsY - creditsVel*dt
+  end
 end
 
 function love.draw()
@@ -140,5 +145,18 @@ function love.draw()
 
         cursorY = cursorY + (buttonHeight + margin)
     end
+  end
+  if currentScreen == "credits" then
+    local creditsText = "Haha Magnet Game" -- TODO: WRITE ACTUAL CREDITS
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.print(creditsText,
+      menuFont, -- TODO: CHANGE MENU FONT TO SOME OTHER FONT
+      windowWidth/2 - menuFont:getWidth(creditsText)/2, creditsY)
+  end
+end
+
+function love.keypressed(key)
+  if currentScreen == "credits" and key == "escape" then
+    currentScreen = "menu"
   end
 end
