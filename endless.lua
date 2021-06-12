@@ -8,6 +8,7 @@ function Endless:new(num_enemies, rate)
 end
 
 function Endless:generate()
+  math.randomseed(os.time())
   for i = 1, self.num_enemies, 1
   do
       x_random = math.random(windowWidth)
