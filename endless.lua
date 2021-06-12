@@ -1,3 +1,4 @@
+-- Replaced by levels
 Endless = Object:extend()
 
 function Endless:new(num_enemies, rate)

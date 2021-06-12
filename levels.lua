@@ -52,3 +52,20 @@ end
 function Levels:setLevel(lvl)
     self.level = lvl
 end
+
+function Levels:resolveCollisions(LXLocation, LYLocation, RXLocation, RYLocation, MagnetHeight, MagnetWidth)
+    for i, enemy in pairs(self.enemy_list) do
+      EXLocation, EYLocation, EnemyHeight, EnemyWidth = self.enemy_list[i]:getEnemyProperties()
+      if EXLocation + EnemyWidth > LXLocation
+      and EXLocation < LXLocation + MagnetWidth
+      and EYLocation + EnemyHeight > LYLocation
+      and EYLocation < LYLocation + MagnetHeight or
+      EXLocation + EnemyWidth > RXLocation
+      and EXLocation < RXLocation + MagnetWidth2
+      and EYLocation + EnemyHeight > RYLocation
+      and EYLocation < RYLocation + MagnetHeight2 then
+        print("Collision")
+      end
+    end
+  end
+  

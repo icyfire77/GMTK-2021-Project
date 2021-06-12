@@ -15,7 +15,7 @@ function love.load()
   -- love.graphics.setBackgroundColor(0.5, 0.5, 0.5, 1) -- for debugging
   Object = require "classic"
   require "player"
-  require "levels"
+  require "endless"
   love.graphics.setDefaultFilter('nearest', 'nearest')
   menuFont = love.graphics.newFont("Mick Caster.ttf", 40)
 
@@ -32,7 +32,10 @@ function love.load()
   playerR = Magnet("right", love.graphics.getWidth() -50, 650, 50, 20)
 
 
-  levels = Levels()
+  num_enemies = 100      -- number of enemies to generate
+  rate = 20             -- rate per minute at which you want enemies to fall
+  endless_enemy_hub = Endless(num_enemies, rate)
+  endless_enemy_hub:generate()
 
   -- menu logic (WIP)
   currentScreen = "menu"
@@ -41,10 +44,6 @@ function love.load()
       -- Likely first change this to some tutorial page later
       currentScreen = "levelOne"
       print(currentScreen)
-      sound = love.audio.newSource(
-        "Different_Heaven_-_Nekozilla.mp3", "stream")
-      love.audio.play(sound)
-      sound:setVolume(0.3)
     end
   ))
 
@@ -64,9 +63,8 @@ end
 
 function love.update(dt)
   if currentScreen == "levelOne" then
-      levels:setLevel(1)
-      levels:generate(sound:tell())
-      levels:update(dt)
+
+      endless_enemy_hub:update(1)
 
       if (love.keyboard.isDown("space") == false) and playerL:getPrevious() then
         if releaseCounter < releaseFrames then
@@ -88,7 +86,6 @@ function love.update(dt)
       playerR:centreCollision()
       playerL:wallCollision()
       playerR:wallCollision()
-      checkCollisions()
   elseif currentScreen == "credits" then
     creditsY = creditsY - creditsVel*dt
   end
@@ -105,7 +102,7 @@ function love.draw()
   if currentScreen == "levelOne" then
     playerL:draw()
     playerR:draw()
-    levels:draw()
+    endless_enemy_hub:draw()
   end
 
   if currentScreen == "menu" then
@@ -162,10 +159,4 @@ function love.keypressed(key)
   if currentScreen == "credits" and key == "escape" then
     currentScreen = "menu"
   end
-end
-
-function checkCollisions()
-  LXLocation, LYLocation, MagnetHeight, MagnetWidth = playerL:getMagnetProperties()
-  RXLocation, RYLocation, MagnetHeight2, MagnetWidth2 = playerR:getMagnetProperties()
-  levels:resolveCollisions(LXLocation, LYLocation, RXLocation, RYLocation, MagnetHeight, MagnetWidth)
 end
