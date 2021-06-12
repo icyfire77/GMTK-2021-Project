@@ -11,6 +11,7 @@ end
 local buttons = {}
 
 function love.load()
+  love.graphics.setBackgroundColor(0.2, 0.3, 0.4, 1)
   Object = require "classic"
   require "player"
   love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -20,7 +21,7 @@ function love.load()
   windowWidth = love.graphics.getWidth()
   windowHeight = love.graphics.getHeight()
   magnetAccel = 10
-  releaseFrames = 60
+  releaseFrames = 15
   releaseCounter = 0
   strength = 15
 
