@@ -77,10 +77,6 @@ function Magnet:setPrevious()
   self.previous = false
 end
 
-function Magnet:getXLocation()
-  return self.x
-end
-
 -- draws magnet to the screen
 function Magnet:draw()
   love.graphics.setColor(1, 1, 1, 1)
