@@ -6,7 +6,7 @@ function Enemy:new(x, y, w, h)
   self.width, self.height = w, h
 end
 
-function Enemy:udpate(dt)
+function Enemy:update(dt)
   self.y = self.y - dt
 end
 

@@ -74,5 +74,6 @@ function Magnet:getXLocation()
 end
 
 function Magnet:draw()
+  love.graphics.setColor(1, 1, 1, 1)
   love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
 end
