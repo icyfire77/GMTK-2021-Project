@@ -118,18 +118,11 @@ function love.draw()
   local levelButtonRadius = 200
 
 
-  if currentScreen == "levelOne" then
+  if currentScreen:find("level", 1, true) == 1 then
     playerL:draw()
     playerR:draw()
     levels:draw()
-    love.graphics.print(levels.score, menuFont, 0, 0)
-  end
-
-  if currentScreen == "levelTwo" then
-    playerL:draw()
-    playerR:draw()
-    levels:draw()
-    love.graphics.print(levels.score, menuFont, 0, 0)
+    love.graphics.print(levels.score, menuFont, 10, 0)
   end
 
   if currentScreen == "menu" then
@@ -239,6 +232,14 @@ function love.draw()
       end
       if not button.now and button.last then
         if clickedx > 0 then
+          if i == 1 then
+            if button.x + diffx > windowWidth then
+              diffx = windowWidth - button.x
+            end
+            if levelButtons[#levelButtons].x + diffx < 0 then
+              diffx = 0 - levelButtons[#levelButtons].x
+            end
+          end
           button.x = button.x + diffx
         end
         actualdiffx = 0
@@ -255,7 +256,6 @@ function love.draw()
           actualdiffx = diffx
         end
       end
-      print(button.x)
       -- setColor uses RGB and alpha
       love.graphics.setColor(unpack(colour))
       love.graphics.circle("fill",
