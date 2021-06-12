@@ -19,6 +19,7 @@ function Magnet:update(dt)
 end
 
 function Magnet:bounce(strength)
+  self.vel = 0
   if self.dir == "left" then
     self.x = self.x - strength
   else
@@ -30,14 +31,14 @@ end
 
 function Magnet:centreCollision()
   if self.dir == "left" then
-    if self.x > love.graphics.getWidth()/2 - self.width then
+    if self.x > windowWidth/2 - self.width then
       self.vel = 0
-      self.x = love.graphics.getWidth()/2 - self.width
+      self.x = windowWidth/2 - self.width
     end
   else
-    if self.x < love.graphics.getWidth()/2 then
+    if self.x < windowWidth/2 then
       self.vel = 0
-      self.x = love.graphics.getWidth()/2
+      self.x = windowWidth/2
     end
   end
 end

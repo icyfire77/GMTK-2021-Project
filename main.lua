@@ -28,8 +28,10 @@ function love.load()
   ))
 
 -- useful global/local variables?
+  windowWidth = love.graphics.getWidth()
+  windowHeight = love.graphics.getHeight()
   magnetAccel = 10
-  strength = 20
+  strength = 15
 
   playerL = Magnet("left", 0, 650, 50, 20)
   playerR = Magnet("right", love.graphics.getWidth()-50, 650, 50, 20)
