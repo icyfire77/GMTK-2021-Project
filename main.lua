@@ -15,7 +15,7 @@ function love.load()
   -- love.graphics.setBackgroundColor(0.5, 0.5, 0.5, 1) -- for debugging
   Object = require "classic"
   require "player"
-  require "endless"
+  require "levels"
   love.graphics.setDefaultFilter('nearest', 'nearest')
   menuFont = love.graphics.newFont("Mick Caster.ttf", 40)
 
@@ -24,7 +24,7 @@ function love.load()
   windowHeight = love.graphics.getHeight()
   creditsY = windowHeight
   magnetAccel = 10
-  releaseFrames = 15
+  releaseFrames = 0
   releaseCounter = 0
   strength = 5
 
@@ -32,10 +32,7 @@ function love.load()
   playerR = Magnet("right", love.graphics.getWidth() -50, 650, 50, 20)
 
 
-  num_enemies = 100      -- number of enemies to generate
-  rate = 20             -- rate per minute at which you want enemies to fall
-  endless_enemy_hub = Endless(num_enemies, rate)
-  endless_enemy_hub:generate()
+  levels = Levels()
 
   -- menu logic (WIP)
   currentScreen = "menu"
@@ -44,6 +41,10 @@ function love.load()
       -- Likely first change this to some tutorial page later
       currentScreen = "levelOne"
       print(currentScreen)
+      sound = love.audio.newSource(
+        "Different_Heaven_-_Nekozilla.mp3", "stream")
+      love.audio.play(sound)
+      sound:setVolume(0.3)
     end
   ))
 
@@ -63,8 +64,9 @@ end
 
 function love.update(dt)
   if currentScreen == "levelOne" then
-
-      endless_enemy_hub:update(1)
+      levels:setLevel(1)
+      levels:generate(sound:tell())
+      levels:update(dt)
 
       if (love.keyboard.isDown("space") == false) and playerL:getPrevious() then
         if releaseCounter < releaseFrames then
@@ -102,7 +104,7 @@ function love.draw()
   if currentScreen == "levelOne" then
     playerL:draw()
     playerR:draw()
-    endless_enemy_hub:draw()
+    levels:draw()
   end
 
   if currentScreen == "menu" then
