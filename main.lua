@@ -182,7 +182,7 @@ function love.draw()
         function()
           currentScreen = "levelOne"
           sound = love.audio.newSource(
-            "Different_Heaven_-_Nekozilla.mp3", "stream")
+            "level_one.ogg", "stream")
           love.audio.play(sound)
           sound:setVolume(0.3)
           levels:setLevel(1)
