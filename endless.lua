@@ -20,14 +20,12 @@ function Endless:generate()
 end
 
 function Endless:update(dt)
-
   for i, enemy in pairs(self.enemy_list) do
     self.enemy_list[i]:update(dt)
     if self.enemy_list[i].y > windowHeight + 50 then
       table.remove(self.enemy_list, i)
     end
   end
-
 end
 
 function Endless:draw()
@@ -39,4 +37,20 @@ function Endless:draw()
     if count < 80 then
       self:generate()
     end
+end
+
+function Endless:resolveCollisions(LXLocation, LYLocation, RXLocation, RYLocation, MagnetHeight, MagnetWidth)
+  for i, enemy in pairs(self.enemy_list) do
+    EXLocation, EYLocation, EnemyHeight, EnemyWidth = self.enemy_list[i]:getEnemyProperties()
+    if EXLocation + EnemyWidth > LXLocation
+    and EXLocation < LXLocation + MagnetWidth
+    and EYLocation + EnemyHeight > LYLocation
+    and EYLocation < LYLocation + MagnetHeight or
+    EXLocation + EnemyWidth > RXLocation
+    and EXLocation < RXLocation + MagnetWidth2
+    and EYLocation + EnemyHeight > RYLocation
+    and EYLocation < RYLocation + MagnetHeight2 then
+      print("Collision")
+    end
+  end
 end

@@ -86,3 +86,7 @@ function Magnet:draw()
   love.graphics.setColor(1, 1, 1, 1)
   love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
 end
+
+function Magnet:getMagnetProperties()
+  return self.x, self.y, self.height, self.width
+end
