@@ -31,6 +31,8 @@ function love.load()
   windowWidth = love.graphics.getWidth()
   windowHeight = love.graphics.getHeight()
   magnetAccel = 10
+  releaseFrames = 60
+  releaseCounter = 0
   strength = 15
 
   playerL = Magnet("left", 0, 650, 50, 20)
@@ -38,8 +40,14 @@ function love.load()
 end
 
 function love.update(dt)
-  -- could condense these into less functions tbh
-  if love.keyboard.isDown('space') then
+  if (love.keyboard.isDown("space") == false) and playerL:getPrevious() then
+    if releaseCounter < releaseFrames then
+      releaseCounter = releaseCounter + 1
+    else
+      releaseCounter = 0
+      playerL:setPrevious()
+    end
+  elseif love.keyboard.isDown('space') then
     playerL:bounce(strength)
     playerR:bounce(strength)
   else
@@ -50,6 +58,8 @@ function love.update(dt)
   end
   playerL:centreCollision()
   playerR:centreCollision()
+  playerL:wallCollision()
+  playerR:wallCollision()
 end
 
 function love.draw()
