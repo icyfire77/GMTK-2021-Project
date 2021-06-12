@@ -45,6 +45,7 @@ function love.load()
         "Different_Heaven_-_Nekozilla.mp3", "stream")
       love.audio.play(sound)
       sound:setVolume(0.3)
+      levels:setLevel(1)
     end
   ))
 
@@ -64,7 +65,6 @@ end
 
 function love.update(dt)
   if currentScreen == "levelOne" then
-      levels:setLevel(1)
       levels:generate(sound:tell())
       levels:update(dt)
 
@@ -106,6 +106,7 @@ function love.draw()
     playerL:draw()
     playerR:draw()
     levels:draw()
+    love.graphics.print(levels.score, menuFont, 0, 0)
   end
 
   if currentScreen == "menu" then
