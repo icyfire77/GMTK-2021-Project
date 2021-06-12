@@ -56,22 +56,30 @@ function Levels:setLevel(lvl)
     self.score = 0
 end
 
-function Levels:resolveCollisions(LXLocation, LYLocation, RXLocation, RYLocation, MagnetHeight, MagnetWidth)
-    -- split this thing
+function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetWidth)
     for i, enemy in pairs(self.enemy_list) do
       EXLocation, EYLocation, EnemyHeight, EnemyWidth = self.enemy_list[i]:getEnemyProperties()
       if EXLocation + EnemyWidth > LXLocation
       and EXLocation < LXLocation + MagnetWidth
       and EYLocation + EnemyHeight > LYLocation
-      and EYLocation < LYLocation + MagnetHeight or
-      EXLocation + EnemyWidth > RXLocation
-      and EXLocation < RXLocation + MagnetWidth2
-      and EYLocation + EnemyHeight > RYLocation
-      and EYLocation < RYLocation + MagnetHeight2 then
-        print("Collision")
+      and EYLocation < LYLocation + MagnetHeight then
+        print("L Collision")
         self.enemy_list[i]:update(1000)
         self.score = self.score + 1
       end
     end
   end
-  
+
+  function Levels:resolveRCollisions(RXLocation, RYLocation, MagnetHeight, MagnetWidth)
+      for i, enemy in pairs(self.enemy_list) do
+        EXLocation, EYLocation, EnemyHeight, EnemyWidth = self.enemy_list[i]:getEnemyProperties()
+        if EXLocation + EnemyWidth > RXLocation
+        and EXLocation < RXLocation + MagnetWidth2
+        and EYLocation + EnemyHeight > RYLocation
+        and EYLocation < RYLocation + MagnetHeight2 then
+          print("R Collision")
+          self.enemy_list[i]:update(1000)
+          self.score = self.score + 1
+        end
+      end
+    end
