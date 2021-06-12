@@ -7,10 +7,10 @@ function Levels:new()
     self.score = 0
     self.enemy_list = {}
     self.timings = {
-        {0, 0.5, 1, 1.5}
+        {0, 0.5, 1, 1.5, 1.5}
     }
     self.positions = {
-        {0.5, 0.6, 0.7, 0.8}
+        {0.5, 0.6, 0.7, 0.8, 0.2}
     }
     self.bpm = {
         128
