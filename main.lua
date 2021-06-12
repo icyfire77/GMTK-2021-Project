@@ -47,7 +47,7 @@ function love.load()
   table.insert(menuButtons, newButton("Start",
     function()
       -- Likely first change this to some tutorial page later
-      
+
       -- currentScreen = "levelOne"
       -- print(currentScreen)
       -- sound = love.audio.newSource(
@@ -188,7 +188,7 @@ function love.draw()
         function()
           currentScreen = "levelOne"
           sound = love.audio.newSource(
-            "Different_Heaven_-_Nekozilla.mp3", "stream")
+            "level_one.ogg", "stream")
           love.audio.play(sound)
           sound:setVolume(0.3)
           levels:setLevel(1)
@@ -212,7 +212,7 @@ function love.draw()
       for i, button in ipairs(levelButtons) do
         button.now = true
         button.x = windowWidth/2 + gap * (i-1)
-        button.y = windowHeight/2 
+        button.y = windowHeight/2
       end
     end
 
@@ -240,7 +240,7 @@ function love.draw()
       if not button.now and button.last then
         if clickedx > 0 then
           button.x = button.x + diffx
-        end  
+        end
         actualdiffx = 0
         if i == #levelButtons then
           diffx = 0
