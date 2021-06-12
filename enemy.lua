@@ -14,7 +14,7 @@ function Enemy:update(dt)
 end
 
 function Enemy:draw()
-  love.graphics.circle("fill", self.x, self.y, self.width, self.height)
+  love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
 end
 
 function Enemy:getEnemyProperties()

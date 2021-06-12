@@ -27,17 +27,17 @@ function love.load()
   windowWidth = love.graphics.getWidth()
   windowHeight = love.graphics.getHeight()
   creditsY = windowHeight
-  magnetAccel = 10
+  magnetAccel = 25
   releaseFrames = 0
   releaseCounter = 0
-  strength = 10
+  strength = 15
 
   -- for level select
   clickedx = 0
   diffx = 0
 
-  playerL = Magnet("left", 0, 650, 50, 20)
-  playerR = Magnet("right", love.graphics.getWidth() -50, 650, 50, 20)
+  playerL = Magnet("left", 0, 650, 80, 40)
+  playerR = Magnet("right", love.graphics.getWidth() -50, 650, 80, 40)
 
 
   levels = Levels()
