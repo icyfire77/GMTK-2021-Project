@@ -88,6 +88,7 @@ function love.update(dt)
       playerR:centreCollision()
       playerL:wallCollision()
       playerR:wallCollision()
+      checkCollisions()
   elseif currentScreen == "credits" then
     creditsY = creditsY - creditsVel*dt
   end
@@ -161,4 +162,10 @@ function love.keypressed(key)
   if currentScreen == "credits" and key == "escape" then
     currentScreen = "menu"
   end
+end
+
+function checkCollisions()
+  LXLocation, LYLocation, MagnetHeight, MagnetWidth = playerL:getMagnetProperties()
+  RXLocation, RYLocation, MagnetHeight2, MagnetWidth2 = playerR:getMagnetProperties()
+  endless_enemy_hub:resolveCollisions(LXLocation, LYLocation, RXLocation, RYLocation, MagnetHeight, MagnetWidth)
 end
