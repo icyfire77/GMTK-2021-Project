@@ -39,7 +39,3 @@ function Endless:draw()
       self:generate()
     end
 end
-
-function Endless:searchList(index)
-  return self.enemy_list[index]:getEnemyProperties()
-end
