@@ -29,3 +29,7 @@ function Endless:draw()
       self.enemy_list[i]:draw()
     end
 end
+
+function Endless:searchList(index)
+  return self.enemy_list[index]:getEnemyProperties()
+end

@@ -69,8 +69,8 @@ function Magnet:setPrevious()
   self.previous = false
 end
 
-function Magnet:getXLocation()
-  return self.x
+function Magnet:getMagnetProperties()
+  return self.x, self.y, self.height, self.width
 end
 
 function Magnet:draw()

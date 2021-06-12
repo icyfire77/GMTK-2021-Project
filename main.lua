@@ -83,6 +83,7 @@ function love.update(dt)
       playerR:centreCollision()
       playerL:wallCollision()
       playerR:wallCollision()
+      checkCollisions()
     end
 end
 
@@ -139,6 +140,24 @@ function love.draw()
         buttonY + textHeight/5)
 
         cursorY = cursorY + (buttonHeight + margin)
+    end
+  end
+end
+
+function checkCollisions()
+  for i = 1, num_enemies do
+    LXLocation, LYLocation, MagnetHeight, MagnetWidth = playerL:getMagnetProperties()
+    RXLocation, RYLocation, MagnetHeight, MagnetWidth = playerR:getMagnetProperties()
+    EXLocation, EYLocation, EnemyHeight, EnemyWidth = endless_enemy_hub:searchList(i)
+    if EXLocation + EnemyWidth > LXLocation
+    and EXLocation < LXLocation + MagnetWidth
+    and EYLocation + EnemyHeight > LYLocation
+    and EYLocation < LYLocation + MagnetHeight or
+    EXLocation + EnemyWidth > RXLocation
+    and EXLocation < RXLocation + MagnetWidth
+    and EYLocation + EnemyHeight > RYLocation
+    and EYLocation < RYLocation + MagnetHeight then
+      print("Collision")
     end
   end
 end
