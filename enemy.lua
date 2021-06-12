@@ -7,7 +7,7 @@ function Enemy:new(x, y, w, h)
 end
 
 function Enemy:update(dt)
-  self.y = self.y - dt
+  self.y = self.y + dt
 end
 
 function Enemy:draw()

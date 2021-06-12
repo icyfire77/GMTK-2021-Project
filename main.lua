@@ -11,9 +11,9 @@ end
 local buttons = {}
 
 function love.load()
-  love.graphics.setBackgroundColor(0.2, 0.3, 0.4, 1)
   Object = require "classic"
   require "player"
+  require "endless"
   love.graphics.setDefaultFilter('nearest', 'nearest')
   menuFont = love.graphics.newFont("Mick Caster.ttf", 40)
 
@@ -21,20 +21,26 @@ function love.load()
   windowWidth = love.graphics.getWidth()
   windowHeight = love.graphics.getHeight()
   magnetAccel = 10
-  releaseFrames = 15
+  releaseFrames = 60
   releaseCounter = 0
   strength = 15
 
   playerL = Magnet("left", 0, 650, 50, 20)
   playerR = Magnet("right", love.graphics.getWidth()-50, 650, 50, 20)
 
--- menu logic (WIP)
+
+  num_enemies = 100      -- number of enemies to generate
+  rate = 20             -- rate per minute at which you want enemies to fall
+  endless_enemy_hub = Endless(num_enemies, rate)
+  endless_enemy_hub:generate()
+
+  -- menu logic (WIP)
   currentScreen = "menu"
   table.insert(buttons, newButton("Start",
     function()
       -- Likely first change this to some tutorial page later
       currentScreen = "levelOne"
-      print("Starting Game")
+      print(currentScreen)
     end
   ))
 
@@ -53,26 +59,31 @@ function love.load()
 end
 
 function love.update(dt)
-  if (love.keyboard.isDown("space") == false) and playerL:getPrevious() then
-    if releaseCounter < releaseFrames then
-      releaseCounter = releaseCounter + 1
-    else
-      releaseCounter = 0
-      playerL:setPrevious()
+  if currentScreen == "levelOne" then
+
+      endless_enemy_hub:update(1)
+
+      if (love.keyboard.isDown("space") == false) and playerL:getPrevious() then
+        if releaseCounter < releaseFrames then
+          releaseCounter = releaseCounter + 1
+        else
+          releaseCounter = 0
+          playerL:setPrevious()
+        end
+      elseif love.keyboard.isDown('space') then
+        playerL:bounce(strength)
+        playerR:bounce(strength)
+      else
+        playerL:update(dt)
+        playerR:update(dt)
+        playerL:accelerate(magnetAccel)
+        playerR:accelerate(magnetAccel)
+      end
+      playerL:centreCollision()
+      playerR:centreCollision()
+      playerL:wallCollision()
+      playerR:wallCollision()
     end
-  elseif love.keyboard.isDown('space') then
-    playerL:bounce(strength)
-    playerR:bounce(strength)
-  else
-    playerL:update(dt)
-    playerR:update(dt)
-    playerL:accelerate(magnetAccel)
-    playerR:accelerate(magnetAccel)
-  end
-  playerL:centreCollision()
-  playerR:centreCollision()
-  playerL:wallCollision()
-  playerR:wallCollision()
 end
 
 function love.draw()
@@ -86,6 +97,7 @@ function love.draw()
   if currentScreen == "levelOne" then
     playerL:draw()
     playerR:draw()
+    endless_enemy_hub:draw()
   end
 
   if currentScreen == "menu" then
