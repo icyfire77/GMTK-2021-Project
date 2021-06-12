@@ -8,6 +8,7 @@ function Magnet:new(dir, x, y, width, height)
   self.height = height
   self.vel = 0
   self.dir = dir
+  self.previous = false
 end
 
 function Magnet:update(dt)
@@ -25,8 +26,7 @@ function Magnet:bounce(strength)
   else
     self.x = self.x + strength
   end
-
-
+  self.previous = true
 end
 
 function Magnet:centreCollision()
@@ -43,8 +43,34 @@ function Magnet:centreCollision()
   end
 end
 
+function Magnet:wallCollision()
+  if self.dir == "left" then
+    if self.x < 0 then
+      self.vel = 0
+      self.x = 0
+    end
+  else
+    if self.x > windowWidth - self.width then
+      self.vel = 0
+      self.x = windowWidth - self.width
+    end
+  end
+end
+
 function Magnet:accelerate(speed)
     self.vel = self.vel + speed
+end
+
+function Magnet:getPrevious()
+  return self.previous
+end
+
+function Magnet:setPrevious()
+  self.previous = false
+end
+
+function Magnet:getXLocation()
+  return self.x
 end
 
 function Magnet:draw()
