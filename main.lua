@@ -358,6 +358,8 @@ end
 function checkCollisions()
   LXLocation, LYLocation, MagnetHeight, MagnetWidth = playerL:getMagnetProperties()
   RXLocation, RYLocation, MagnetHeight2, MagnetWidth2 = playerR:getMagnetProperties()
-  levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetWidth)
-  levels:resolveRCollisions(RXLocation, RYLocation, MagnetHeight2, MagnetWidth2)
+  if levels:resolveDoubleCollisions(LXLocation, LYLocation, RXLocation, MagnetHeight, MagnetWidth) == false then
+    levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetWidth)
+    levels:resolveRCollisions(RXLocation, RYLocation, MagnetHeight2, MagnetWidth2)
+  end
 end
