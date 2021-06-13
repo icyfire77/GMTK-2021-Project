@@ -22,6 +22,7 @@ function love.load()
   require "levels"
   love.graphics.setDefaultFilter('nearest', 'nearest')
   menuFont = love.graphics.newFont("Mick Caster.ttf", 40)
+  bgimg = love.graphics.newImage("dark2.png")
 
   -- useful global/local variables?
   windowWidth = love.graphics.getWidth()
@@ -117,6 +118,11 @@ function love.draw()
   local gap = 500
   local levelButtonRadius = 200
 
+  for i = 0, love.graphics.getWidth() / bgimg:getWidth() do
+    for j = 0, love.graphics.getHeight() / bgimg:getHeight() do
+        love.graphics.draw(bgimg, i * bgimg:getWidth(), j * bgimg:getHeight())
+    end
+  end
 
   if currentScreen:find("level", 1, true) == 1 then
     playerL:draw()
@@ -191,7 +197,7 @@ function love.draw()
         function()
           currentScreen = "levelTwo"
           sound = love.audio.newSource(
-            "Different_Heaven_-_Nekozilla.mp3", "stream")
+            "Trials.mp3", "stream")
           love.audio.play(sound)
           sound:setVolume(0.3)
           levels:setLevel(2)
