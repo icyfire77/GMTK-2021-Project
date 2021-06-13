@@ -138,7 +138,7 @@ function love.draw()
   if currentScreen:find("level", 1, true) == 1 then
     playerL:draw()
     playerR:draw()
-    levels:draw()
+    levels:draw(sound:tell())
     love.graphics.print(levels.score, menuFont, 10, 0)
   end
 

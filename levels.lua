@@ -28,7 +28,7 @@ function Levels:generate(t)
             self.count = self.count + 1
             x_pos = windowWidth * self.positions[self.level][self.count] - enemy_size/2
             y_pos = 0 -- for now
-            curr_enemy = Enemy(x_pos, y_pos, enemy_size, enemy_size, 500)
+            curr_enemy = Enemy(x_pos, y_pos, enemy_size, enemy_size, 500, t)
             table.insert(self.enemy_list, curr_enemy)
             print("enemy added")
             if self.count + 1 > #self.timings[self.level] then
@@ -41,16 +41,17 @@ end
 function Levels:update(dt)
   for i, enemy in pairs(self.enemy_list) do
     self.enemy_list[i]:update(dt)
-    if self.enemy_list[i].y > windowHeight + 50 then
+    if self.enemy_list[i].out then
       table.remove(self.enemy_list, i)
     end
+
   end
 
 end
 
-function Levels:draw()
+function Levels:draw(t)
     for i, enemy in pairs(self.enemy_list) do
-      self.enemy_list[i]:draw()
+      self.enemy_list[i]:draw(t)
     end
 end
 
