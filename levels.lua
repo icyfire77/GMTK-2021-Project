@@ -101,9 +101,7 @@ function Levels:resolveDoubleCollisions(LXLocation, LYLocation, RXLocation, Magn
       return true
     end
   end
-  if double == false then
-    return false
-  end
+  return false
 end
 
 function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetWidth)
