@@ -255,7 +255,8 @@ function love.draw()
     local creditsText7 = "Ivan Feng"
     local creditsText8 = "Music:"
     local creditsText9 = "Ivan Feng"
-    local creditsText10 = "Shawn Lu"
+    local creditsText10 = "Graphics:"
+    local creditsText11 = "Shawn Lu"
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print(creditsText,
       creditsFont,
@@ -286,7 +287,10 @@ function love.draw()
         windowWidth/2 - creditsFont:getWidth(creditsText9)/2, creditsY + 1200)
     love.graphics.print(creditsText10,
         creditsFont,
-        windowWidth/2 - creditsFont:getWidth(creditsText10)/2, creditsY + 1300)
+        windowWidth/2 - creditsFont:getWidth(creditsText10)/2, creditsY + 1500)
+    love.graphics.print(creditsText11,
+        creditsFont,
+        windowWidth/2 - creditsFont:getWidth(creditsText10)/2, creditsY + 1600)
   end
 
   if currentScreen == "SelectLevel" then
@@ -426,7 +430,7 @@ function love.draw()
       end
     else
       love.graphics.setColor(1, 1, 1, 1)
-      local instruction = "Press Space to separate\nRelease Space to attact\n\nExtra points will be earned\nwhen magnets are joint together\n\nPress Space to start"
+      local instruction = "Press Space to separate\nRelease Space to attact\n\nCollect blocks to get points\n\nExtra points will be earned\nwhen magnets are joint together\n\nPress Space to start"
       local instructionWidth = menuFont:getWidth(instruction)
       love.graphics.print(instruction, menuFont, windowWidth/2 - instructionWidth/2, 40)
     end
