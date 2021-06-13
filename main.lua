@@ -192,6 +192,9 @@ function love.draw()
     end
     for i, button in ipairs(levelButtons) do
       button.now = true
+      clickedx = 0
+      diffx = 0
+      scrollv = 0
     end
   end
 
