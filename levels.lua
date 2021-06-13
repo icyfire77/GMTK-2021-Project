@@ -22,13 +22,13 @@ end
 
 -- Set the level to 1 before generate
 function Levels:generate(t)
-    enemy_size = 20
+    enemy_sizew, enemy_sizeh = 60, 10
     if  self.count < #self.timings[self.level] then
         while t + 0 >= self.timings[self.level][self.count + 1]*60/self.bpm[self.level] do
             self.count = self.count + 1
-            x_pos = windowWidth * self.positions[self.level][self.count] - enemy_size/2
+            x_pos = windowWidth * self.positions[self.level][self.count] - enemy_sizew/2
             y_pos = 0 -- for now
-            curr_enemy = Enemy(x_pos, y_pos, enemy_size, enemy_size, 500, t)
+            curr_enemy = Enemy(x_pos, y_pos, enemy_sizew, enemy_sizeh, 500, t)
             table.insert(self.enemy_list, curr_enemy)
             print("enemy added")
             if self.count + 1 > #self.timings[self.level] then
@@ -67,11 +67,23 @@ function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetW
       and EXLocation < LXLocation + MagnetWidth
       and EYLocation + EnemyHeight > LYLocation
       and EYLocation < LYLocation + MagnetHeight then
-        print("L Collision")
-        self.score = self.score + self.enemy_list[i].point
-        self.enemy_list[i].point = 0
-        -- include this if you want the block to disappear
-        self.enemy_list[i]:begone()
+        if EXLocation - LXLocation < 10 and EXLocation - LXLocation > -10 then
+          print("L Perfect Collision")
+          self.score = self.score + self.enemy_list[i].point
+          self.score = self.score + self.enemy_list[i].point
+          self.score = self.score + self.enemy_list[i].point
+          self.score = self.score + self.enemy_list[i].point
+          self.score = self.score + self.enemy_list[i].point
+          self.enemy_list[i].point = 0
+          -- include this if you want the block to disappear
+          self.enemy_list[i]:begone()
+        else
+          print("L Collision")
+          self.score = self.score + self.enemy_list[i].point
+          self.enemy_list[i].point = 0
+          -- include this if you want the block to disappear
+          self.enemy_list[i]:begone()
+        end
       end
     end
   end
@@ -83,11 +95,23 @@ function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetW
         and EXLocation < RXLocation + MagnetWidth2
         and EYLocation + EnemyHeight > RYLocation
         and EYLocation < RYLocation + MagnetHeight2 then
-          print("R Collision")
-          self.score = self.score + self.enemy_list[i].point
-          self.enemy_list[i].point = 0
-          -- include this if you want the block to disappear
-          self.enemy_list[i]:begone()
+          if EXLocation - RXLocation < 10 and EXLocation - RXLocation > -10 then
+            print("R Perfect Collision")
+            self.score = self.score + self.enemy_list[i].point
+            self.score = self.score + self.enemy_list[i].point
+            self.score = self.score + self.enemy_list[i].point
+            self.score = self.score + self.enemy_list[i].point
+            self.score = self.score + self.enemy_list[i].point
+            self.enemy_list[i].point = 0
+            -- include this if you want the block to disappear
+            self.enemy_list[i]:begone()
+          else
+            print("R Collision")
+            self.score = self.score + self.enemy_list[i].point
+            self.enemy_list[i].point = 0
+            -- include this if you want the block to disappear
+            self.enemy_list[i]:begone()
+          end
         end
       end
     end
