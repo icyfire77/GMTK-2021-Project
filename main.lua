@@ -23,6 +23,7 @@ function love.load()
   love.graphics.setDefaultFilter('nearest', 'nearest')
 
   logo = love.graphics.newImage("magnetvox.png")
+  esc = love.graphics.newImage("Esc.png")
 
 
   menuFont = love.graphics.newFont("Mick Caster.ttf", 40)
@@ -58,7 +59,7 @@ function love.load()
 
 
   menusound = love.audio.newSource(
-    "Trials.mp3", "stream")
+    "ambientjam.ogg", "stream")
 
   -- menu logic (WIP)
   currentScreen = "menu"
@@ -78,7 +79,6 @@ function love.load()
       -- levels:setLevel(1)
 
       currentScreen = "SelectLevel"
-      love.audio.stop()
     end
   ))
 
@@ -236,13 +236,16 @@ function love.draw()
       scrollv = 0
     end
 
-    print(logo:getWidth())
     love.graphics.setColor(255,255,255,255)
     love.graphics.draw(logo, windowWidth/2 - logo:getWidth()/12, 60, 0.2, 0.2)
     love.graphics.setColor(0, 0, 0, 1)
   end
 
   if currentScreen == "credits" then
+    love.graphics.setColor(255,255,255,255)
+    love.graphics.draw(esc, 10, 10, 0, 0.15, 0.15)
+    love.graphics.setColor(0, 0, 0, 1)
+
     local creditsText = "Magnet Vox" -- TODO: WRITE ACTUAL CREDITS
     local creditsText2 = "a first time game jam project"
     local creditsText3 = "Programming:"
@@ -287,24 +290,27 @@ function love.draw()
   end
 
   if currentScreen == "SelectLevel" then
+    love.graphics.setColor(255,255,255,255)
+    love.graphics.draw(esc, 10, 10, 0, 0.15, 0.15)
+    love.graphics.setColor(0, 0, 0, 1)
+
+    if not menusound:isPlaying() then
+      love.audio.play(menusound)
+      menusound:setVolume(0.3)
+    end
+
     if #levelButtons <= 0 then
       table.insert(levelButtons, newButton("Level 1",
         function()
-          currentScreen = "levelOne"
-          sound = love.audio.newSource(
-            "level_one.ogg", "stream")
-          love.audio.play(sound)
-          sound:setVolume(0.3)
+          currentScreen = "WaitingToStart"
+          love.audio.stop()
           levels:setLevel(1)
         end
       ))
       table.insert(levelButtons, newButton("Level 2",
         function()
-          currentScreen = "levelTwo"
-          sound = love.audio.newSource(
-            "c-major-scale.mp3", "stream")
-          love.audio.play(sound)
-          sound:setVolume(0.3)
+          currentScreen = "WaitingToStart"
+          love.audio.stop()
           levels:setLevel(2)
         end
       ))
@@ -399,6 +405,30 @@ function love.draw()
         button.x - textWidth/2 + actualdiffx,
         button.y - textHeight/2)
 
+    end
+  end
+
+  if currentScreen == "WaitingToStart" then
+    if love.keyboard.isDown('space') then
+      if levels.level == 1 then
+        currentScreen = "levelOne"
+        sound = love.audio.newSource(
+          "level_one.ogg", "stream")
+        love.audio.play(sound)
+        sound:setVolume(0.3)
+      end
+      if levels.level == 2 then
+        currentScreen = "levelTwo"
+        sound = love.audio.newSource(
+          "c-major-scale.mp3", "stream")
+        love.audio.play(sound)
+        sound:setVolume(0.3)
+      end
+    else
+      love.graphics.setColor(1, 1, 1, 1)
+      local instruction = "Press Space to separate\nRelease Space to attact\n\nExtra points will be earned\nwhen magnets are joint together\n\nPress Space to start"
+      local instructionWidth = menuFont:getWidth(instruction)
+      love.graphics.print(instruction, menuFont, windowWidth/2 - instructionWidth/2, 40)
     end
   end
 

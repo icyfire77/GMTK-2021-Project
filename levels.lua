@@ -23,6 +23,16 @@ function Levels:new()
         hitsound:setVolume(0.5)
         love.audio.play(hitsound)
     end
+    self.perfect = function()
+        hitsound = love.audio.newSource("perfect.mp3", "stream")
+        hitsound:setVolume(0.5)
+        love.audio.play(hitsound)
+    end
+    self.double = function()
+        hitsound = love.audio.newSource("double.mp3", "stream")
+        hitsound:setVolume(0.5)
+        love.audio.play(hitsound)
+    end
 end
 
 -- Set the level to 1 before generate
@@ -88,7 +98,7 @@ function Levels:resolveDoubleCollisions(LXLocation, LYLocation, RXLocation, Magn
       self.enemy_list[i].point = 0
       -- include this if you want the block to disappear
       self.enemy_list[i]:begone()
-      self.hit()
+      self.double()
 
       return true
     else
@@ -112,7 +122,7 @@ function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetW
           self.enemy_list[i].point = 0
           -- include this if you want the block to disappear
           self.enemy_list[i]:begone()
-          self.hit()
+          self.perfect()
 
         else
           toggleGood()
@@ -141,7 +151,7 @@ function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetW
             self.enemy_list[i].point = 0
             -- include this if you want the block to disappear
             self.enemy_list[i]:begone()
-            self.hit()
+            self.perfect()
 
           else
             toggleGood()
