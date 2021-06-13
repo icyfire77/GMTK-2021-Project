@@ -420,7 +420,7 @@ function love.draw()
       if levels.level == 2 then
         currentScreen = "levelTwo"
         sound = love.audio.newSource(
-          "c-major-scale.mp3", "stream")
+          "Trials.mp3", "stream")
         love.audio.play(sound)
         sound:setVolume(0.3)
       end
