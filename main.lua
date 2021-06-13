@@ -36,6 +36,8 @@ function love.load()
   -- for level select
   clickedx = 0
   diffx = 0
+  lastx = 0
+  scrollv = 0
 
   playerL = Magnet("left", windowWidth/2, windowHeight-10, 60, 10)
   playerR = Magnet("right", windowWidth/2, windowHeight-10, 60, 10)
@@ -245,16 +247,9 @@ function love.draw()
           button.fn()
         end
       end
+
       if not button.now and button.last then
         if clickedx > 0 then
-          if i == 1 then
-            if button.x + diffx > windowWidth then
-              diffx = windowWidth - button.x
-            end
-            if levelButtons[#levelButtons].x + diffx < 0 then
-              diffx = 0 - levelButtons[#levelButtons].x
-            end
-          end
           button.x = button.x + diffx
         end
         actualdiffx = 0
@@ -263,12 +258,35 @@ function love.draw()
         end
       end
       if button.now then
+        if i == 1 then
+          scrollv = mx - lastx
+          lastx = mx
+        end
         diffx = mx - clickedx
         -- just to catch in the bery beginning button.now == true but diffx shouldnt be set
         if clickedx <= 0 then
           actualdiffx = 0
         else
           actualdiffx = diffx
+        end
+      else
+        if i == 1 then
+          if scrollv > 30 then
+            scrollv = 30
+          end
+          if levelButtons[#levelButtons].x < 0 then
+            scrollv = 1
+          end
+          if levelButtons[1].x > windowWidth then
+            scrollv = -1
+          end
+        end
+        button.x = button.x + scrollv * 3
+        if i == #levelButtons then
+          scrollv = scrollv * 0.9
+          if scrollv * scrollv < 0.1 then
+            scrollv = 0
+          end
         end
       end
       -- setColor uses RGB and alpha
