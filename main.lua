@@ -112,6 +112,10 @@ function love.update(dt)
       playerL:wallCollision()
       playerR:wallCollision()
       checkCollisions()
+
+      if not sound:isPlaying() then
+        currentScreen = "endGame"
+      end
   elseif currentScreen == "credits" then
     creditsY = creditsY - creditsVel*dt
   end
@@ -182,6 +186,9 @@ function love.draw()
 
         cursorY = cursorY + (buttonHeight + margin)
     end
+    for i, button in ipairs(levelButtons) do
+      button.now = true
+    end
   end
 
   if currentScreen == "credits" then
@@ -208,7 +215,7 @@ function love.draw()
         function()
           currentScreen = "levelTwo"
           sound = love.audio.newSource(
-            "Trials.mp3", "stream")
+            "c-major-scale.mp3", "stream")
           love.audio.play(sound)
           sound:setVolume(0.3)
           levels:setLevel(2)
@@ -307,11 +314,24 @@ function love.draw()
 
     end
   end
+
+  if currentScreen == "endGame" then
+    local text = "GG, you score is " ..(levels.score).."\n click to return to level select" 
+    love.graphics.print(text, menuFont, 30, 30)
+    if love.mouse.isDown(1) then
+      currentScreen = "SelectLevel"
+    end
+
+  end
 end
 
 function love.keypressed(key)
-  if currentScreen == "credits" and key == "escape" then
-    currentScreen = "menu"
+  if key == "escape" then
+    if currentScreen == "credits" then
+      currentScreen = "menu"
+    elseif currentScreen == "SelectLevel" then
+      currentScreen = "menu"
+    end
   end
 end
 
