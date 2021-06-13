@@ -430,14 +430,14 @@ function love.draw()
       end
     else
       love.graphics.setColor(1, 1, 1, 1)
-      local instruction = "Press Space to separate\nRelease Space to attact\n\nCollect blocks to get points\n\nExtra points will be earned\nwhen magnets are joint together\n\nPress Space to start"
+      local instruction = "Press Space to separate\nRelease Space to attact\n\nCollect blocks to get points\n\nExtra points will be earned\nwhen magnets are joined together\n\nPress Space to start"
       local instructionWidth = menuFont:getWidth(instruction)
       love.graphics.print(instruction, menuFont, windowWidth/2 - instructionWidth/2, 40)
     end
   end
 
   if currentScreen == "endGame" then
-    local text = "GG, your score is " ..(levels.score).."\n click to return to level select" 
+    local text = "GG, your score is " ..(levels.score).."\n click to return to level select"
     love.graphics.print(text, menuFont, 30, 30)
     if love.mouse.isDown(1) then
       currentScreen = "SelectLevel"

@@ -99,11 +99,11 @@ function Levels:resolveDoubleCollisions(LXLocation, LYLocation, RXLocation, Magn
       -- include this if you want the block to disappear
       self.enemy_list[i]:begone()
       self.double()
-
       return true
-    else
-      return false
     end
+  end
+  if double == false then
+    return false
   end
 end
 
