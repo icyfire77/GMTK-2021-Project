@@ -25,12 +25,12 @@ function Levels:new()
     end
     self.perfect = function()
         hitsound = love.audio.newSource("perfect.mp3", "stream")
-        hitsound:setVolume(0.5)
+        hitsound:setVolume(0.3)
         love.audio.play(hitsound)
     end
     self.double = function()
         hitsound = love.audio.newSource("double.mp3", "stream")
-        hitsound:setVolume(0.5)
+        hitsound:setVolume(0.3)
         love.audio.play(hitsound)
     end
 end
