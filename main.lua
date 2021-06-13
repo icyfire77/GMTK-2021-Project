@@ -22,6 +22,9 @@ function love.load()
   require "levels"
   love.graphics.setDefaultFilter('nearest', 'nearest')
 
+  logo = love.graphics.newImage("magnetvox.png")
+
+
   menuFont = love.graphics.newFont("Mick Caster.ttf", 40)
   selectionFont = love.graphics.newFont("BD-TinyFont.otf", 20)
   creditsFont = love.graphics.newFont("Order-Regular.ttf", 20)
@@ -49,6 +52,9 @@ function love.load()
 
   levels = Levels()
 
+  menusound = love.audio.newSource(
+    "Trials.mp3", "stream")
+
   -- menu logic (WIP)
   currentScreen = "menu"
   table.insert(menuButtons, newButton("Start",
@@ -64,6 +70,7 @@ function love.load()
       -- levels:setLevel(1)
 
       currentScreen = "SelectLevel"
+      love.audio.stop()
     end
   ))
 
@@ -80,6 +87,8 @@ function love.load()
       love.event.quit(0)
     end
   ))
+
+  
 end
 
 function love.update(dt)
@@ -131,7 +140,7 @@ function love.draw()
   local margin = 30
 
   local totalHeight = (buttonHeight + margin)*#menuButtons
-  local cursorY = 0
+  local cursorY = 50
 
   -- for level select
   local gap = 300
@@ -150,7 +159,13 @@ function love.draw()
     love.graphics.print(levels.score, selectionFont, 10, 0)
   end
 
-  if currentScreen == "menu" then
+  if currentScreen == "menu" then    
+    if not menusound:isPlaying() then
+      love.audio.play(menusound)
+      menusound:setVolume(0.3)
+    end
+
+
     for i, button in ipairs(menuButtons) do
       button.last = button.now
 
@@ -196,6 +211,11 @@ function love.draw()
       diffx = 0
       scrollv = 0
     end
+
+    print(logo:getWidth())
+    love.graphics.setColor(255,255,255,255)
+    love.graphics.draw(logo, windowWidth/2 - logo:getWidth()/12, 60, 0.2, 0.2)
+    love.graphics.setColor(0, 0, 0, 1)
   end
 
   if currentScreen == "credits" then
