@@ -1,6 +1,6 @@
 Levels = Object:extend()
 
-function Levels:new(hitsoundfn)
+function Levels:new()
     require "enemy"
     self.level = 0
     self.count = 0
@@ -18,7 +18,11 @@ function Levels:new(hitsoundfn)
         120,
         128
     }
-    self.hit = hitsoundfn
+    self.hit = function()
+        hitsound = love.audio.newSource("hit.mp3", "stream")
+        hitsound:setVolume(0.5)
+        love.audio.play(hitsound)
+    end
 end
 
 -- Set the level to 1 before generate

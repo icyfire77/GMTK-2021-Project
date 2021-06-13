@@ -53,15 +53,11 @@ function love.load()
 
   menusound = love.audio.newSource(
     "Trials.mp3", "stream")
-  hitsound = love.audio.newSource(
-    "hit.mp3", "stream")
+ 
   -- menu logic (WIP)
   currentScreen = "menu"
 
-  levels = Levels(function()
-    hitsound:setVolume(1)
-    love.audio.play(hitsound)
-  end)
+  levels = Levels()
 
   table.insert(menuButtons, newButton("Start",
     function()
@@ -163,6 +159,9 @@ function love.draw()
     playerR:draw()
     levels:draw(sound:tell())
     love.graphics.print(levels.score, selectionFont, 10, 0)
+    local tpb = 60/levels.bpm[levels.level]
+    love.graphics.setColor(1, 1, 1, 1-(sound:tell() - math.floor(sound:tell()/tpb)*tpb))
+
   end
 
   if currentScreen == "menu" then    
