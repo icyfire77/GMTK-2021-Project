@@ -28,12 +28,18 @@ end
 -- Set the level to 1 before generate
 function Levels:generate(t)
     enemy_sizew, enemy_sizeh = 60, 10
+    enemy_speed = 500
+    offset = 0
+    -- change this to true for offsets
+    if false then
+        offset = (windowHeight-30)/enemy_speed
+    end
     if  self.count < #self.timings[self.level] then
-        while t + 0 >= self.timings[self.level][self.count + 1]*60/self.bpm[self.level] do
+        while t + offset >= self.timings[self.level][self.count + 1]*60/self.bpm[self.level] do
             self.count = self.count + 1
             x_pos = windowWidth * self.positions[self.level][self.count] - enemy_sizew/2
             y_pos = 0 -- for now
-            curr_enemy = Enemy(x_pos, y_pos, enemy_sizew, enemy_sizeh, 500, t)
+            curr_enemy = Enemy(x_pos, y_pos, enemy_sizew, enemy_sizeh, enemy_speed, t)
             table.insert(self.enemy_list, curr_enemy)
             print("enemy added")
             if self.count + 1 > #self.timings[self.level] then

@@ -29,7 +29,8 @@ function love.load()
   selectionFont = love.graphics.newFont("BD-TinyFont.otf", 20)
   creditsFont = love.graphics.newFont("Order-Regular.ttf", 20)
 
-  bgimg = love.graphics.newImage("dark2.png")
+  -- I can draw a better one if this one feels bad
+  bgimg = love.graphics.newImage("dark3.png")
 
   -- useful global/local variables?
   windowWidth = love.graphics.getWidth()
@@ -148,11 +149,7 @@ function love.draw()
   local gap = 300
   local levelButtonRadius = 120
 
-  for i = 0, love.graphics.getWidth() / bgimg:getWidth() do
-    for j = 0, love.graphics.getHeight() / bgimg:getHeight() do
-        love.graphics.draw(bgimg, i * bgimg:getWidth(), j * bgimg:getHeight())
-    end
-  end
+  love.graphics.draw(bgimg, 0, 0)
 
   if currentScreen:find("level", 1, true) == 1 then
     playerL:draw()
