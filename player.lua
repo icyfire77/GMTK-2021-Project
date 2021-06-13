@@ -33,6 +33,16 @@ function Magnet:bounce(strength)
   self.previous = true
 end
 
+function Magnet:reversebounce(strength)
+  self.vel = 0
+  if self.dir == "left" then
+    self.x = self.x + strength
+  else
+    self.x = self.x - strength
+  end
+  self.previous = true
+end
+
 -- makes sure magnet does not cross centre of screen
 function Magnet:centreCollision()
   if self.dir == "left" then

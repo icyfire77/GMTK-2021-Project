@@ -30,14 +30,14 @@ function love.load()
   magnetAccel = 25
   releaseFrames = 0
   releaseCounter = 0
-  strength = 15
+  strength = 10
 
   -- for level select
   clickedx = 0
   diffx = 0
 
-  playerL = Magnet("left", 0, 650, 80, 40)
-  playerR = Magnet("right", love.graphics.getWidth() -50, 650, 80, 40)
+  playerL = Magnet("left", windowWidth/2, windowHeight-10, 60, 10)
+  playerR = Magnet("right", windowWidth/2, windowHeight-10, 60, 10)
 
 
   levels = Levels()
@@ -80,6 +80,7 @@ function love.update(dt)
       levels:generate(sound:tell())
       levels:update(dt)
 
+--[[
       if (love.keyboard.isDown("space") == false) and playerL:getPrevious() then
         if releaseCounter < releaseFrames then
           releaseCounter = releaseCounter + 1
@@ -87,14 +88,21 @@ function love.update(dt)
           releaseCounter = 0
           playerL:setPrevious()
         end
-      elseif love.keyboard.isDown('space') then
+        ]]
+      if love.keyboard.isDown('space') then
         playerL:bounce(strength)
         playerR:bounce(strength)
       else
+
+        playerL:reversebounce(strength)
+        playerR:reversebounce(strength)
+
+        --[[
         playerL:update(dt)
         playerR:update(dt)
         playerL:accelerate(magnetAccel)
         playerR:accelerate(magnetAccel)
+        ]]
       end
       playerL:centreCollision()
       playerR:centreCollision()
