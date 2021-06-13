@@ -124,8 +124,8 @@ function love.draw()
   local cursorY = 0
 
   -- for level select
-  local gap = 500
-  local levelButtonRadius = 200
+  local gap = 300
+  local levelButtonRadius = 120
 
   for i = 0, love.graphics.getWidth() / bgimg:getWidth() do
     for j = 0, love.graphics.getHeight() / bgimg:getHeight() do
