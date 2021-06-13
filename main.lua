@@ -41,11 +41,11 @@ function love.load()
   perfect = false
   double = false
   rewardCounter = 0
-  rewardFrames = 180
+  rewardFrames = 20
   magnetAccel = 25
   releaseFrames = 0
   releaseCounter = 0
-  strength = 5
+  strength = 6.5
 
   -- for level select
   clickedx = 0
@@ -135,7 +135,13 @@ function love.update(dt)
       checkCollisions()
 
       if not sound:isPlaying() then
-        currentScreen = "endGame"
+        if currentScreen == "levelOne" then
+          sound = love.audio.newSource("level_one_long.ogg", "stream")
+          love.audio.play(sound)
+          love.audio.setVolume(0.5)
+          sound.seek(sound, 103, "seconds")
+        end
+          currentScreen = "endGame"
       end
   elseif currentScreen == "credits" then
     creditsY = creditsY - creditsVel*dt
@@ -419,20 +425,20 @@ function love.draw()
         sound = love.audio.newSource(
           "level_one.ogg", "stream")
         love.audio.play(sound)
-        sound:setVolume(0.3)
+        sound:setVolume(0.5)
       end
       if levels.level == 2 then
         currentScreen = "levelTwo"
         sound = love.audio.newSource(
           "Trials.mp3", "stream")
         love.audio.play(sound)
-        sound:setVolume(0.3)
+        sound:setVolume(0.5)
       end
     else
       love.graphics.setColor(1, 1, 1, 1)
       local instruction = "Press Space to separate\nRelease Space to attact\n\nCollect blocks to get points\n\nExtra points will be earned\nwhen magnets are joined together\n\nPress Space to start"
       local instructionWidth = menuFont:getWidth(instruction)
-      love.graphics.print(instruction, menuFont, windowWidth/2 - instructionWidth/2, 40)
+      love.graphics.print(instruction, creditsFont, windowWidth/2 - instructionWidth/2, 40)
     end
   end
 
@@ -440,6 +446,7 @@ function love.draw()
     local text = "GG, your score is " ..(levels.score).."\n click to return to level select"
     love.graphics.print(text, menuFont, 30, 30)
     if love.mouse.isDown(1) then
+      love.audio.stop()
       currentScreen = "SelectLevel"
     end
 
