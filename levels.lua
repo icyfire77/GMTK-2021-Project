@@ -82,9 +82,6 @@ function Levels:setLevel(lvl)
 end
 
 function Levels:resolveDoubleCollisions(LXLocation, LYLocation, RXLocation, MagnetHeight, MagnetWidth)
-  if double == true then
-    return false
-  end
   for i, enemy in pairs(self.enemy_list) do
     EXLocation, EYLocation, EnemyHeight, EnemyWidth = self.enemy_list[i]:getEnemyProperties()
     if EXLocation > LXLocation
@@ -104,7 +101,9 @@ function Levels:resolveDoubleCollisions(LXLocation, LYLocation, RXLocation, Magn
       return true
     end
   end
-  if double == false then
+  if double == true then
+    return true
+  elseif double == false then
     return false
   end
 end
