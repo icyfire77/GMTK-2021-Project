@@ -381,7 +381,7 @@ function love.draw()
   end
 
   if currentScreen == "endGame" then
-    local text = "GG, you score is " ..(levels.score).."\n click to return to level select" 
+    local text = "GG, your score is " ..(levels.score).."\n click to return to level select" 
     love.graphics.print(text, menuFont, 30, 30)
     if love.mouse.isDown(1) then
       currentScreen = "SelectLevel"
