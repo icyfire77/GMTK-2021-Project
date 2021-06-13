@@ -51,7 +51,6 @@ function Levels:generate(t)
             y_pos = 0 -- for now
             curr_enemy = Enemy(x_pos, y_pos, enemy_sizew, enemy_sizeh, enemy_speed, t)
             table.insert(self.enemy_list, curr_enemy)
-            print("enemy added")
             if self.count + 1 > #self.timings[self.level] then
                 break
             end
