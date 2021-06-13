@@ -58,6 +58,29 @@ function Levels:setLevel(lvl)
     self.score = 0
 end
 
+function Levels:resolveDoubleCollisions(LXLocation, LYLocation, RXLocation, MagnetHeight, MagnetWidth)
+  for i, enemy in pairs(self.enemy_list) do
+    EXLocation, EYLocation, EnemyHeight, EnemyWidth = self.enemy_list[i]:getEnemyProperties()
+    if EXLocation > LXLocation
+    and EXLocation < LXLocation + MagnetWidth
+    and EXLocation + EnemyWidth > RXLocation
+    and EXLocation + EnemyWidth < RXLocation + MagnetWidth
+    and EYLocation + EnemyHeight > LYLocation
+    and EYLocation < LYLocation + MagnetHeight then
+      print("Double!")
+      for j=1,10 do
+        self.score = self.score + self.enemy_list[i].point
+      end
+      self.enemy_list[i].point = 0
+      -- include this if you want the block to disappear
+      self.enemy_list[i]:begone()
+      return true
+    else
+      return false
+    end
+  end
+end
+
 function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetWidth)
     for i, enemy in pairs(self.enemy_list) do
       EXLocation, EYLocation, EnemyHeight, EnemyWidth = self.enemy_list[i]:getEnemyProperties()
@@ -66,17 +89,15 @@ function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetW
       and EYLocation + EnemyHeight > LYLocation
       and EYLocation < LYLocation + MagnetHeight then
         if EXLocation - LXLocation < 10 and EXLocation - LXLocation > -10 then
-          print("L Perfect Collision")
-          self.score = self.score + self.enemy_list[i].point
-          self.score = self.score + self.enemy_list[i].point
-          self.score = self.score + self.enemy_list[i].point
-          self.score = self.score + self.enemy_list[i].point
-          self.score = self.score + self.enemy_list[i].point
+          print("L Perfect!")
+          for j=1,5 do
+            self.score = self.score + self.enemy_list[i].point
+          end
           self.enemy_list[i].point = 0
           -- include this if you want the block to disappear
           self.enemy_list[i]:begone()
         else
-          print("L Collision")
+          print("L Good!")
           self.score = self.score + self.enemy_list[i].point
           self.enemy_list[i].point = 0
           -- include this if you want the block to disappear
@@ -94,17 +115,15 @@ function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetW
         and EYLocation + EnemyHeight > RYLocation
         and EYLocation < RYLocation + MagnetHeight2 then
           if EXLocation - RXLocation < 10 and EXLocation - RXLocation > -10 then
-            print("R Perfect Collision")
-            self.score = self.score + self.enemy_list[i].point
-            self.score = self.score + self.enemy_list[i].point
-            self.score = self.score + self.enemy_list[i].point
-            self.score = self.score + self.enemy_list[i].point
-            self.score = self.score + self.enemy_list[i].point
+            print("R Perfect!")
+            for j=1,5 do
+              self.score = self.score + self.enemy_list[i].point
+            end
             self.enemy_list[i].point = 0
             -- include this if you want the block to disappear
             self.enemy_list[i]:begone()
           else
-            print("R Collision")
+            print("R Good!")
             self.score = self.score + self.enemy_list[i].point
             self.enemy_list[i].point = 0
             -- include this if you want the block to disappear
