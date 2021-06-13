@@ -70,6 +70,8 @@ function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetW
         print("L Collision")
         self.score = self.score + self.enemy_list[i].point
         self.enemy_list[i].point = 0
+        -- include this if you want the block to disappear
+        self.enemy_list[i]:begone()
       end
     end
   end
@@ -84,6 +86,8 @@ function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetW
           print("R Collision")
           self.score = self.score + self.enemy_list[i].point
           self.enemy_list[i].point = 0
+          -- include this if you want the block to disappear
+          self.enemy_list[i]:begone()
         end
       end
     end

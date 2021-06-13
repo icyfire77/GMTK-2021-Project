@@ -39,8 +39,8 @@ function love.load()
   lastx = 0
   scrollv = 0
 
-  playerL = Magnet("left", windowWidth/2, windowHeight-10, 60, 10)
-  playerR = Magnet("right", windowWidth/2, windowHeight-10, 60, 10)
+  playerL = Magnet("left", windowWidth/2, windowHeight-30, 60, 10)
+  playerR = Magnet("right", windowWidth/2, windowHeight-30, 60, 10)
 
 
   levels = Levels()

@@ -11,10 +11,13 @@ function Enemy:new(x, y, w, h, v, t)
   self.point = 1
 end
 
--- move enemy down the screen at constant velocity
--- function Enemy:update(dt)
+function Enemy:update(dt)
 --   self.y = self.y + self.speed * dt
--- end
+end
+
+function Enemy:begone()
+  self.initialy = self.initialy + 10000
+ end
 
 function Enemy:draw(t)
   self.y = self.initialy + self.speed * (t - self.timestamp)
