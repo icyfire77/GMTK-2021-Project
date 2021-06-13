@@ -50,13 +50,19 @@ function love.load()
   playerR = Magnet("right", windowWidth/2, windowHeight-30, 60, 10)
 
 
-  levels = Levels()
 
   menusound = love.audio.newSource(
     "Trials.mp3", "stream")
-
+  hitsound = love.audio.newSource(
+    "hit.mp3", "stream")
   -- menu logic (WIP)
   currentScreen = "menu"
+
+  levels = Levels(function()
+    hitsound:setVolume(1)
+    love.audio.play(hitsound)
+  end)
+
   table.insert(menuButtons, newButton("Start",
     function()
       -- Likely first change this to some tutorial page later

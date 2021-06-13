@@ -1,6 +1,6 @@
 Levels = Object:extend()
 
-function Levels:new()
+function Levels:new(hitsoundfn)
     require "enemy"
     self.level = 0
     self.count = 0
@@ -18,6 +18,7 @@ function Levels:new()
         120,
         128
     }
+    self.hit = hitsoundfn
 end
 
 -- Set the level to 1 before generate
@@ -76,6 +77,8 @@ function Levels:resolveDoubleCollisions(LXLocation, LYLocation, RXLocation, Magn
       self.enemy_list[i].point = 0
       -- include this if you want the block to disappear
       self.enemy_list[i]:begone()
+      self.hit()
+
       return true
     else
       return false
@@ -98,12 +101,15 @@ function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetW
           self.enemy_list[i].point = 0
           -- include this if you want the block to disappear
           self.enemy_list[i]:begone()
+          self.hit()
+
         else
           print("L Good!")
           self.score = self.score + self.enemy_list[i].point
           self.enemy_list[i].point = 0
           -- include this if you want the block to disappear
           self.enemy_list[i]:begone()
+          self.hit()
         end
       end
     end
@@ -124,12 +130,16 @@ function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetW
             self.enemy_list[i].point = 0
             -- include this if you want the block to disappear
             self.enemy_list[i]:begone()
+            self.hit()
+
           else
             print("R Good!")
             self.score = self.score + self.enemy_list[i].point
             self.enemy_list[i].point = 0
             -- include this if you want the block to disappear
             self.enemy_list[i]:begone()
+            self.hit()
+
           end
         end
       end
