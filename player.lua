@@ -89,8 +89,21 @@ end
 
 -- draws magnet to the screen
 function Magnet:draw()
-  love.graphics.setColor(1, 1, 1, 1)
+  if good then
+    love.graphics.setColor(0, 1, 0, 1)
+  elseif perfect then
+    love.graphics.setColor(1, .75, .2, 1)
+  elseif double then
+    if rewardCounter % 2 == 0 then
+      love.graphics.setColor(0, 0, 0, 1)
+    else
+      love.graphics.setColor(1, 0, 0, 1)
+    end
+  else
+    love.graphics.setColor(1, 1, 1, 1)
+  end
   love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
+  love.graphics.setColor(1, 1, 1, 1)
 end
 
 function Magnet:getMagnetProperties()

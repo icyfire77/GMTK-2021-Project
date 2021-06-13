@@ -36,6 +36,11 @@ function love.load()
   windowWidth = love.graphics.getWidth()
   windowHeight = love.graphics.getHeight()
   creditsY = windowHeight
+  good = false
+  perfect = false
+  double = false
+  rewardCounter = 0
+  rewardFrames = 180
   magnetAccel = 25
   releaseFrames = 0
   releaseCounter = 0
@@ -54,7 +59,7 @@ function love.load()
 
   menusound = love.audio.newSource(
     "Trials.mp3", "stream")
- 
+
   -- menu logic (WIP)
   currentScreen = "menu"
 
@@ -91,7 +96,7 @@ function love.load()
     end
   ))
 
-  
+
 end
 
 function love.update(dt)
@@ -159,9 +164,26 @@ function love.draw()
     local tpb = 60/levels.bpm[levels.level]
     love.graphics.setColor(1, 1, 1, 1-(sound:tell() - math.floor(sound:tell()/tpb)*tpb))
 
+    if good or perfect or double then
+      if rewardCounter < rewardFrames then
+        if double then
+          love.graphics.print("Double!", selectionFont, (windowWidth / 2) - 60, 500)
+        elseif perfect then
+          love.graphics.print("Perfect!", selectionFont, (windowWidth / 2) - 62.5, 500)
+        elseif good then
+          love.graphics.print("Good!", selectionFont, (windowWidth / 2) - 37.5, 500)
+        end
+        rewardCounter = rewardCounter + 1
+      elseif rewardCounter == rewardFrames then
+        rewardCounter = 0
+        good = false
+        perfect = false
+        double = false
+      end
+    end
   end
 
-  if currentScreen == "menu" then    
+  if currentScreen == "menu" then
     if not menusound:isPlaying() then
       love.audio.play(menusound)
       menusound:setVolume(0.3)
@@ -381,7 +403,7 @@ function love.draw()
   end
 
   if currentScreen == "endGame" then
-    local text = "GG, you score is " ..(levels.score).."\n click to return to level select" 
+    local text = "GG, you score is " ..(levels.score).."\n click to return to level select"
     love.graphics.print(text, menuFont, 30, 30)
     if love.mouse.isDown(1) then
       currentScreen = "SelectLevel"
@@ -406,5 +428,41 @@ function checkCollisions()
   if levels:resolveDoubleCollisions(LXLocation, LYLocation, RXLocation, MagnetHeight, MagnetWidth) == false then
     levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetWidth)
     levels:resolveRCollisions(RXLocation, RYLocation, MagnetHeight2, MagnetWidth2)
+  end
+end
+
+function toggleGood()
+  if good == false then
+    good = true
+    if double or perfect then
+      double = false
+      perfect = false
+    end
+  else
+    rewardCounter = 0
+  end
+end
+
+function togglePerfect()
+  if perfect == false then
+    perfect = true
+    if double or good then
+      double = false
+      good = false
+    end
+  else
+    rewardCounter = 0
+  end
+end
+
+function toggleDouble()
+  if double == false then
+    double = true
+    if good or perfect then
+      good = false
+      perfect = false
+    end
+  else
+    rewardCounter = 0
   end
 end
