@@ -21,7 +21,11 @@ function love.load()
   require "player"
   require "levels"
   love.graphics.setDefaultFilter('nearest', 'nearest')
+
   menuFont = love.graphics.newFont("Mick Caster.ttf", 40)
+  selectionFont = love.graphics.newFont("BD-TinyFont.otf", 20)
+  creditsFont = love.graphics.newFont("Order-Regular.ttf", 20)
+
   bgimg = love.graphics.newImage("dark2.png")
 
   -- useful global/local variables?
@@ -31,7 +35,7 @@ function love.load()
   magnetAccel = 25
   releaseFrames = 0
   releaseCounter = 0
-  strength = 10
+  strength = 5
 
   -- for level select
   clickedx = 0
@@ -139,7 +143,7 @@ function love.draw()
     playerL:draw()
     playerR:draw()
     levels:draw(sound:tell())
-    love.graphics.print(levels.score, menuFont, 10, 0)
+    love.graphics.print(levels.score, selectionFont, 10, 0)
   end
 
   if currentScreen == "menu" then
@@ -185,11 +189,47 @@ function love.draw()
   end
 
   if currentScreen == "credits" then
-    local creditsText = "Haha Magnet Game" -- TODO: WRITE ACTUAL CREDITS
+    local creditsText = "Magnet Vox" -- TODO: WRITE ACTUAL CREDITS
+    local creditsText2 = "a first time game jam project"
+    local creditsText3 = "Programming:"
+    local creditsText4 = "Shawn Lu"
+    local creditsText5 = "Nick Nadeau"
+    local creditsText6 = "Jibin Alex"
+    local creditsText7 = "Ivan Feng"
+    local creditsText8 = "Music:"
+    local creditsText9 = "Ivan Feng"
+    local creditsText10 = "Shawn Lu"
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print(creditsText,
-      menuFont, -- TODO: CHANGE MENU FONT TO SOME OTHER FONT
-      windowWidth/2 - menuFont:getWidth(creditsText)/2, creditsY)
+      creditsFont,
+      windowWidth/2 - creditsFont:getWidth(creditsText)/2, creditsY)
+    love.graphics.print(creditsText2,
+      creditsFont,
+      windowWidth/2 - creditsFont:getWidth(creditsText2)/2, creditsY + 100)
+    love.graphics.print(creditsText3,
+      creditsFont,
+      windowWidth/2 - creditsFont:getWidth(creditsText3)/2, creditsY + 400)
+    love.graphics.print(creditsText4,
+        creditsFont,
+        windowWidth/2 - creditsFont:getWidth(creditsText4)/2, creditsY + 500)
+    love.graphics.print(creditsText5,
+        creditsFont,
+        windowWidth/2 - creditsFont:getWidth(creditsText5)/2, creditsY + 600)
+    love.graphics.print(creditsText6,
+        creditsFont,
+        windowWidth/2 - creditsFont:getWidth(creditsText6)/2, creditsY + 700)
+    love.graphics.print(creditsText7,
+        creditsFont,
+        windowWidth/2 - creditsFont:getWidth(creditsText7)/2, creditsY + 800)
+    love.graphics.print(creditsText8,
+        creditsFont,
+        windowWidth/2 - creditsFont:getWidth(creditsText8)/2, creditsY + 1100)
+    love.graphics.print(creditsText9,
+        creditsFont,
+        windowWidth/2 - creditsFont:getWidth(creditsText9)/2, creditsY + 1200)
+    love.graphics.print(creditsText10,
+        creditsFont,
+        windowWidth/2 - creditsFont:getWidth(creditsText10)/2, creditsY + 1300)
   end
 
   if currentScreen == "SelectLevel" then
@@ -303,7 +343,7 @@ function love.draw()
         button.text,
         menuFont,
         button.x - textWidth/2 + actualdiffx,
-        button.y - textHeight/5)
+        button.y - textHeight/2)
 
     end
   end
