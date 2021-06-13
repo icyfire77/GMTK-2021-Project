@@ -40,8 +40,8 @@ end
 
 function Levels:update(dt)
   for i, enemy in pairs(self.enemy_list) do
-    self.enemy_list[i]:update(dt)
-    if self.enemy_list[i].out then
+    -- self.enemy_list[i]:update(dt)
+    if self.enemy_list[i].y > windowHeight + 50  then
       table.remove(self.enemy_list, i)
     end
 
@@ -68,8 +68,8 @@ function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetW
       and EYLocation + EnemyHeight > LYLocation
       and EYLocation < LYLocation + MagnetHeight then
         print("L Collision")
-        self.enemy_list[i]:update(1000)
-        self.score = self.score + 1
+        self.score = self.score + self.enemy_list[i].point
+        self.enemy_list[i].point = 0
       end
     end
   end
@@ -82,8 +82,8 @@ function Levels:resolveLCollisions(LXLocation, LYLocation, MagnetHeight, MagnetW
         and EYLocation + EnemyHeight > RYLocation
         and EYLocation < RYLocation + MagnetHeight2 then
           print("R Collision")
-          self.enemy_list[i]:update(1000)
-          self.score = self.score + 1
+          self.score = self.score + self.enemy_list[i].point
+          self.enemy_list[i].point = 0
         end
       end
     end
